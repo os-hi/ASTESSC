@@ -1,0 +1,21 @@
+{
+    "appId": "astessc.com",
+    "appName": "ASTESSC",
+    "bundledWebRuntime": false,
+    "webDir": "www",
+    "cordova": {},
+    "android": {
+      "path": "android",
+      "capacitorId": "astessc.com",
+      "signingConfig": {
+        "storePassword": "password",
+        "alias": "my-key-alias",
+        "password": "password"
+      }
+    },
+
+"server": {
+    "url": "http://192.168.1.2:3000",
+    "cleartext": true
+}
+}

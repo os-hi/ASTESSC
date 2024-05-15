@@ -1,9 +1,9 @@
 <script setup lang="ts">
-  import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage } from '@ionic/vue';
+  import { IonHeader, IonToolbar, IonTitle, IonContent, IonPage, IonIcon} from '@ionic/vue';
   import { useDatabaseObject } from 'vuefire'
     import { ref as dbRef } from 'firebase/database'
     import { db } from '../database/firebase'
-
+    import { batteryCharging, batteryDead, batteryFull } from "ionicons/icons";
 
     const solarData = useDatabaseObject<any>(dbRef(db, "solar-tracker-system/solar-battery"))
 
@@ -17,20 +17,101 @@
       </ion-toolbar>
     </ion-header>
     <ion-content>
-      <div class="example-content" v-for="(item, itemKey) in solarData" :key="itemKey">
-        <template v-for="(value, key) in item" :key="key">
-          {{ value }}
+      <div v-if="solarData" class="example-content">
+        <template v-if="solarData.status == 'full'">
+          <div class="image-container">
+            <img src="../assets/solar.webp" alt="">
+            <ion-icon :icon="batteryFull" class="overlay-full-icon"></ion-icon>
+          </div>
         </template>
+        <template v-if="solarData.status == 'charging'">
+          <div class="image-container">
+            <img src="../assets/solar.webp" alt="">
+            <ion-icon :icon="batteryCharging" class="overlay-charge-icon"></ion-icon>
+          </div>
+        </template>
+        <template v-else>
+          <div class="image-container">
+            <img src="../assets/solar.webp" alt="">
+            <ion-icon :icon="batteryDead" class="overlay-icon"></ion-icon>
+          </div>
+        </template>
+       <h3>{{ solarData.message }}</h3>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
+
 <style scoped>
-  .example-content {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
+.example-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.image-container img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@keyframes zoom {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1);
   }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+}
+
+.overlay-icon {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  right: 0; /* Adjust as needed */
+  font-size: 8rem; /* initial size */
+  color: red; /* initial color */
+  animation: zoom 2s infinite; /* zoom in and out animation */
+}
+
+.image-container:hover .overlay-icon {
+  font-size: 3.5rem; /* increased size on hover */
+  color: red; /* red color on hover */
+  animation: none; /* stop animation on hover */
+}
+.overlay-full-icon {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  right: 0px; /* Adjust as needed */
+  font-size: 8rem; /* initial size */
+  color: greenyellow; /* initial color */
+  animation: zoom 2s infinite; /* zoom in and out animation */
+}
+
+.image-container:hover .overlay-full-icon {
+  font-size: 3.5rem; /* increased size on hover */
+  color: greenyellow; /* red color on hover */
+  animation: none; /* stop animation on hover */
+}
+.overlay-charge-icon {
+  position: absolute;
+  bottom: 20px; /* Adjust as needed */
+  right: 0px; /* Adjust as needed */
+  font-size: 8rem; /* initial size */
+  color: orange; /* initial color */
+  animation: zoom 2s infinite; /* zoom in and out animation */
+}
+
+.image-container:hover .overlay-charge-icon {
+  font-size: 3.5rem; /* increased size on hover */
+  color: orange; /* red color on hover */
+  animation: none; /* stop animation on hover */
+}
 </style>

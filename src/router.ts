@@ -2,7 +2,6 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
 import { RouteRecordRaw } from 'vue-router';
 
-
 // Define routes
 const routes: Array<RouteRecordRaw> = [
     {
