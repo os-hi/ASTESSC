@@ -7,15 +7,9 @@ import {
   IonTabButton,
   IonLabel,
   IonIcon,
-  IonMenu,
-  IonHeader,
-  IonToolbar,
-  IonContent,
-  IonTitle,
 } from "@ionic/vue";
 
 import { sunny, batteryCharging } from "ionicons/icons";
-import router from "../router";
 
 
 </script>
